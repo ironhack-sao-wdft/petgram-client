@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "./MyPets.css";
 
@@ -8,7 +9,7 @@ function MyPets() {
   useEffect(() => {
     async function fetchMyPets() {
       try {
-        const response = await axios.get("http://localhost:4000/pet");
+        const response = await axios.get(`http://localhost:4000/pet`);
         setMyPets([...response.data]);
       } catch (err) {
         console.error(err);
@@ -24,16 +25,18 @@ function MyPets() {
         {myPets.map((myPet) => {
           return (
             <div className="col-6 p-1" key={myPet._id}>
-              <div className="card border-0  mb-2">
-                <img
-                  src={myPet.picture}
-                  className="card-img-top rounded-0 img-grid-size"
-                  alt={myPet.name}
-                />
-                <div className="card-body p-1">
-                  <span>{myPet.name}</span>
+              <Link to={`/pet/${myPet._id}`}>
+                <div className="card border-0  mb-2">
+                  <img
+                    src={myPet.picture}
+                    className="card-img-top rounded-0 img-grid-size"
+                    alt={myPet.name}
+                  />
+                  <div className="card-body p-1">
+                    <span>{myPet.name}</span>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
           );
         })}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 import PetForm from "./PetForm";
@@ -15,6 +16,8 @@ function NewPet() {
     picture: "",
     adopted: false,
   });
+
+  const history = useHistory();
 
   // A função de atualização de state dos Hooks é destrutiva, ou seja, ela substitui o valor no state atual pelo valor recebido. Pra não perdermos o que já temos no nosso objeto de state, precisamos fazer o spread do state atual
   function handleChange(event) {
@@ -37,6 +40,8 @@ function NewPet() {
         age: Number(state.age),
       });
       console.log(response);
+
+      history.push("/my-pets");
     } catch (err) {
       console.error(err);
     }
