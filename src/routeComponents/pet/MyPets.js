@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../../apis/petgram-api";
 import "./MyPets.css";
 
 function MyPets() {
@@ -9,7 +9,7 @@ function MyPets() {
   useEffect(() => {
     async function fetchMyPets() {
       try {
-        const response = await axios.get(`http://localhost:4000/pet`);
+        const response = await api.get(`/pet`);
         setMyPets([...response.data]);
       } catch (err) {
         console.error(err);

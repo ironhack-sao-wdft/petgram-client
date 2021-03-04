@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
+
+import api from "../../apis/petgram-api";
+import { AuthContext } from "../../contexts/authContext";
 
 import PetForm from "./PetForm";
 
@@ -18,6 +20,7 @@ function NewPet() {
   });
 
   const history = useHistory();
+  const authContext = useContext(AuthContext);
 
   // A função de atualização de state dos Hooks é destrutiva, ou seja, ela substitui o valor no state atual pelo valor recebido. Pra não perdermos o que já temos no nosso objeto de state, precisamos fazer o spread do state atual
   function handleChange(event) {
@@ -35,7 +38,7 @@ function NewPet() {
     event.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:4000/pet", {
+      const response = await api.post("/pet", {
         ...state,
         age: Number(state.age),
       });
@@ -46,6 +49,8 @@ function NewPet() {
       console.error(err);
     }
   }
+
+  console.log("O STATE DO CONTEXT =>", authContext.loggedInUser);
 
   return (
     <div className="m-2">
