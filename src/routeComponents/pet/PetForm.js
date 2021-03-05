@@ -81,10 +81,9 @@ function PetForm(props) {
 
       <TextInput
         label="Profile Picture"
-        type="text"
+        type="file"
         id="petFormPicture"
         name="picture"
-        value={props.state.picture}
         onChange={props.onChange}
       />
 

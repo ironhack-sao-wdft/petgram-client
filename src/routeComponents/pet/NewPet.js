@@ -24,23 +24,44 @@ function NewPet() {
 
   // A função de atualização de state dos Hooks é destrutiva, ou seja, ela substitui o valor no state atual pelo valor recebido. Pra não perdermos o que já temos no nosso objeto de state, precisamos fazer o spread do state atual
   function handleChange(event) {
-    const stateBkp = { ...state };
-    stateBkp[event.target.name] = event.target.value;
+    if (event.target.files) {
+      setState({ ...state, [event.target.name]: event.target.files[0] });
+    } else {
+      const stateBkp = { ...state };
+      stateBkp[event.target.name] = event.target.value;
 
-    setState(stateBkp);
+      setState(stateBkp);
+    }
   }
 
   function handleCheckboxChange(event) {
     setState({ ...state, [event.target.name]: !state[event.target.name] });
   }
 
+  async function handleFileUpload(file) {
+    try {
+      const uploadData = new FormData();
+
+      uploadData.append("picture", file);
+
+      const response = await api.post("/upload", uploadData);
+
+      return response.data.fileUrl;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
 
     try {
+      const uploadImageUrl = await handleFileUpload(state.picture);
+
       const response = await api.post("/pet", {
         ...state,
         age: Number(state.age),
+        picture: uploadImageUrl,
       });
       console.log(response);
 
@@ -49,8 +70,6 @@ function NewPet() {
       console.error(err);
     }
   }
-
-  console.log("O STATE DO CONTEXT =>", authContext.loggedInUser);
 
   return (
     <div className="m-2">
