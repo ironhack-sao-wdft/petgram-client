@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
-import axios from "axios";
 import { AuthContext } from "../../contexts/authContext";
 
 import TextInput from "../../components/TextInput";
+import api from "../../apis/petgram-api";
 
 function Login() {
   const [state, setState] = useState({ email: "", password: "" });
@@ -17,7 +17,7 @@ function Login() {
     event.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:4000/login", state);
+      const response = await api.post("/login", state);
 
       console.log(response);
 

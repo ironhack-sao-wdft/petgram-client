@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import axios from "axios";
+
+import api from "../../apis/petgram-api";
 
 function DeletePet() {
   const { id } = useParams();
@@ -9,7 +10,7 @@ function DeletePet() {
   useEffect(() => {
     async function deletePet() {
       try {
-        const response = await axios.delete(`http://localhost:4000/pet/${id}`);
+        const response = await api.delete(`/pet/${id}`);
 
         console.log(response);
 

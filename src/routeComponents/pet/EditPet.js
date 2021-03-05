@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import axios from "axios";
 
 import PetForm from "./PetForm";
 import { useEffect } from "react";
+import api from "../../apis/petgram-api";
 
 function EditPet() {
   const [state, setState] = useState({
@@ -24,7 +24,7 @@ function EditPet() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`http://localhost:4000/pet/${id}`);
+        const response = await api.get(`/pet/${id}`);
 
         setState({ ...response.data });
       } catch (err) {
@@ -49,7 +49,7 @@ function EditPet() {
     event.preventDefault();
 
     try {
-      const response = await axios.patch(`http://localhost:4000/pet/${id}`, {
+      const response = await api.patch(`/pet/${id}`, {
         ...state,
         age: Number(state.age),
       });

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import axios from "axios";
 import "./PetDetail.css";
 
 import ConfirmationModal from "../../components/ConfirmationModal";
+import api from "../../apis/petgram-api";
 
 function PetDetail(props) {
   const [petDetails, setPetDetails] = useState({
@@ -26,7 +26,7 @@ function PetDetail(props) {
 
   useEffect(() => {
     async function fetchPetDetails() {
-      const response = await axios.get(`http://localhost:4000/pet/${id}`);
+      const response = await api.get(`/pet/${id}`);
 
       setPetDetails({ ...response.data });
     }

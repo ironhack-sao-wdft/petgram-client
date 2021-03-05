@@ -1,8 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 import TextInput from "../../components/TextInput";
+import api from "../../apis/petgram-api";
 
 function Signup() {
   const [state, setState] = useState({ name: "", email: "", password: "" });
@@ -22,7 +22,7 @@ function Signup() {
     event.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:4000/signup", state);
+      const response = await api.post("/signup", state);
 
       console.log(response);
 
