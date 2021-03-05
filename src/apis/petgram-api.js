@@ -4,11 +4,11 @@ const api = axios.create({
   baseURL: "http://localhost:4000",
 });
 
-const storedUser = localStorage.getItem("loggedInUser");
+api.interceptors.request.use(async (config) => {
+  const storedUser = localStorage.getItem("loggedInUser");
 
-const loggedInUser = JSON.parse(storedUser || '""');
+  const loggedInUser = JSON.parse(storedUser || '""');
 
-api.interceptors.request.use((config) => {
   config.headers = {
     Authorization: `Bearer ${loggedInUser.token}`,
   };
